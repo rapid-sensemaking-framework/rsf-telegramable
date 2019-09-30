@@ -74,7 +74,11 @@ class Telegramable extends EventEmitter {
     // which can "reach" the person
     async speak(string) {
         const chatId = usernameChatIdMap[this.id]
-        telegramBot.sendMessage(chatId, string)
+        if (chatId) {
+            telegramBot.sendMessage(chatId, string)
+        } else {
+            console.log('Tried to send message to ' + this.id + ' but did not have chat_id')
+        }
     }
 
     listen(callback) {
