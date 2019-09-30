@@ -1,6 +1,6 @@
 {
   "name": "rsf-telegramable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a module for exposing a very super simple API for sending/receiving telegram messages as an eventemitter",
   "main": "index.js",
   "scripts": {
