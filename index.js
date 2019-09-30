@@ -17,6 +17,7 @@ let telegramBot
 let usernameChatIdMap = {}
 function setUsernameChatIdFromMessage(msg) {
     const { username, id } = msg.chat
+    console.log('setting chat_id for username ' + username + ': ' + id)
     usernameChatIdMap[username] = id
 }
 
@@ -34,6 +35,7 @@ module.exports.init = async (token) => {
 
     // forward messages over the appropriate event on the eventBus
     telegramBot.on('message', msg => {
+        console.log('receiving message from ' + msg.chat.username)
         setUsernameChatIdFromMessage(msg)
         eventBus.emit(msg.chat.username, msg.text)
     })
