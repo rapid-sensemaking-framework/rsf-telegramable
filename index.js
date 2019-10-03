@@ -17,7 +17,7 @@ let telegramBot
 let usernameChatIdMap = {}
 function setUsernameChatIdFromMessage(msg) {
     const { username, id } = msg.chat
-    console.log('setting chat_id for username ' + username + ': ' + id)
+    console.log('setting telegram chat_id for username ' + username + ': ' + id)
     usernameChatIdMap[username] = id
 }
 
@@ -27,19 +27,13 @@ let eventBus
 // ... if telegram thinks you have received that update
 // they will no longer return it in the getUpdates results
 module.exports.init = async (token) => {
+    console.log('initializing rsf-telegramable')
     telegramBot = new TelegramBot(token, { polling: true })
 
     // a singleton that will act to transmit events between the webhook listener
     // and the instances of Textable
     eventBus = new EventEmitter()
-
-    // forward messages over the appropriate event on the eventBus
-    telegramBot.on('message', msg => {
-        console.log('receiving message from ' + msg.chat.username)
-        setUsernameChatIdFromMessage(msg)
-        eventBus.emit(msg.chat.username, msg.text)
-    })
-
+    
     try {
         const updates = await telegramBot.getUpdates()
         updates.forEach(update => {
@@ -48,9 +42,26 @@ module.exports.init = async (token) => {
             }
         })
     } catch (e) {
-        console.log('failed to call getUpdates with error', e)
+        console.log('failed to call getUpdates')
     }
+
+    // forward messages over the appropriate event on the eventBus
+    telegramBot.on('message', msg => {
+        console.log('receiving telegram message from ' + msg.chat.username)
+        setUsernameChatIdFromMessage(msg)
+        eventBus.emit(msg.chat.username, msg.text)
+    })
 }
+
+const shutdown = async () => {
+    console.log('shutting down rsf-telegramable')
+    telegramBot.removeAllListeners()
+    await telegramBot.stopPolling()
+    eventBus.removeAllListeners()
+    telegramBot = null
+    eventBus = null
+}
+module.exports.shutdown = shutdown
 
 class Telegramable extends EventEmitter {
     constructor(id, name) {
