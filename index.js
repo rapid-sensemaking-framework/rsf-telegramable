@@ -47,9 +47,9 @@ let eventBus, mongoConnect, mongoClient
 // ... if telegram thinks you have received that update
 // they will no longer return it in the getUpdates results
 
-// telegramConfig should be like 'tgtoken@mongodb://localhost:27017/@databasename'
+// telegramConfig should be like 'tgtoken@@mongodb://localhost:27017/@@databasename'
 module.exports.init = async (telegramConfig) => {
-    const [token, mongoUri, dbName] = telegramConfig.split('@')
+    const [token, mongoUri, dbName] = telegramConfig.split('@@')
     console.log('initializing rsf-telegramable')
     telegramBot = new TelegramBot(token, { polling: true })
 
