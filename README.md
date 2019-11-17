@@ -39,7 +39,7 @@ const config = {
   socketUrl: 'ws://localhost:3022'
 }
 init(config).then(() => {
-  const person = new Telegramable('+12223334444')
+  const person = new Telegramable('tgusername')
   // log anything that we hear from them
   person.listen(console.log)
   person.speak('hello!')
