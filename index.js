@@ -55,11 +55,11 @@ var protocol_1 = require("rsf-telegram-bot/protocol");
 // this key will be also used by other classes that implement the "Contactable"
 // trait/contract
 var STANDARD_EVENT_KEY = 'msg';
-module.exports.STANDARD_EVENT_KEY = STANDARD_EVENT_KEY;
+exports.STANDARD_EVENT_KEY = STANDARD_EVENT_KEY;
 // export a var which will be used to determine whether to use Mattermostable
 // as their mode of contact
 var TYPE_KEY = 'telegram';
-module.exports.TYPE_KEY = TYPE_KEY;
+exports.TYPE_KEY = TYPE_KEY;
 var socket;
 var eventBus;
 var init = function (telegramConfig) { return __awaiter(void 0, void 0, void 0, function () {

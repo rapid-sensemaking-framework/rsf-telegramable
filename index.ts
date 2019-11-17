@@ -8,12 +8,10 @@ import { SEND_MESSAGE, RECEIVE_MESSAGE, TelegramMessage } from 'rsf-telegram-bot
 // this key will be also used by other classes that implement the "Contactable"
 // trait/contract
 const STANDARD_EVENT_KEY = 'msg'
-module.exports.STANDARD_EVENT_KEY = STANDARD_EVENT_KEY
 
 // export a var which will be used to determine whether to use Mattermostable
 // as their mode of contact
 const TYPE_KEY = 'telegram'
-module.exports.TYPE_KEY = TYPE_KEY
 
 let socket: SocketIOClient.Socket
 let eventBus: EventEmitter
@@ -88,6 +86,8 @@ class Telegramable extends EventEmitter {
 export {
   init,
   shutdown,
-  Telegramable
+  Telegramable,
+  TYPE_KEY,
+  STANDARD_EVENT_KEY
 }
 
