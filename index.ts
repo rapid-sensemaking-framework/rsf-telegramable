@@ -63,22 +63,27 @@ class Telegramable extends EventEmitter {
 
   // expose a function that conforms to the standard for Contactable
   // which can "reach" the person
-  async speak (message: string) {
+  speak (message: string): Promise<void> {
     const telegramMessage: TelegramMessage = {
       username: this.id,
       message
     }
-    socket.emit(SEND_MESSAGE, telegramMessage)
+    return new Promise((resolve, reject) => {
+      socket.emit(SEND_MESSAGE, telegramMessage, (status: string) => {
+        if (status === 'success') resolve()
+        else if (status === 'error') reject()
+      })
+    })
   }
 
-  listen (callback: (message: string) => void) {
+  listen (callback: (message: string) => void): void {
     // just set up the actual event listener
     // using the appropriate key,
     // but not bothering to expose it
     this.on(STANDARD_EVENT_KEY, callback)
   }
 
-  stopListening () {
+  stopListening (): void {
     this.removeAllListeners()
   }
 }

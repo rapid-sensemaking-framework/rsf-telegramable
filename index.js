@@ -119,15 +119,16 @@ var Telegramable = /** @class */ (function (_super) {
     // expose a function that conforms to the standard for Contactable
     // which can "reach" the person
     Telegramable.prototype.speak = function (message) {
-        return __awaiter(this, void 0, void 0, function () {
-            var telegramMessage;
-            return __generator(this, function (_a) {
-                telegramMessage = {
-                    username: this.id,
-                    message: message
-                };
-                socket.emit(protocol_1.SEND_MESSAGE, telegramMessage);
-                return [2 /*return*/];
+        var telegramMessage = {
+            username: this.id,
+            message: message
+        };
+        return new Promise(function (resolve, reject) {
+            socket.emit(protocol_1.SEND_MESSAGE, telegramMessage, function (status) {
+                if (status === 'success')
+                    resolve();
+                else if (status === 'error')
+                    reject();
             });
         });
     };
