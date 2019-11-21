@@ -141,6 +141,13 @@ var Telegramable = /** @class */ (function (_super) {
     Telegramable.prototype.stopListening = function () {
         this.removeAllListeners();
     };
+    Telegramable.prototype.config = function () {
+        return {
+            type: TYPE_KEY,
+            id: this.id,
+            name: this.name
+        };
+    };
     return Telegramable;
 }(events_1.EventEmitter));
 exports.Telegramable = Telegramable;

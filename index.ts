@@ -1,7 +1,7 @@
 import * as io from 'socket.io-client'
 import { EventEmitter } from 'events'
 import {
-  ContactableProxyConfig
+  ContactableProxyConfig, ContactableConfig
 } from 'rsf-types'
 import { SEND_MESSAGE, RECEIVE_MESSAGE, TelegramMessage } from 'rsf-telegram-bot/protocol'
 
@@ -85,6 +85,14 @@ class Telegramable extends EventEmitter {
 
   stopListening (): void {
     this.removeAllListeners()
+  }
+
+  config (): ContactableConfig {
+    return {
+      type: TYPE_KEY,
+      id: this.id,
+      name: this.name
+    }
   }
 }
 
